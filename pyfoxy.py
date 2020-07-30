@@ -75,7 +75,7 @@ def error(msg="", err=None):
     """ Print exception stack trace python """
     if msg:
         traceback.print_exc()
-        print("{} - Code: {}, Message: {}".format(msg, str(err[0]), str(err[1])))
+        print("{} - Code: {}, Message: {}".format(msg, str(err[0]), err[1]))
     else:
         traceback.print_exc()
 
@@ -99,6 +99,8 @@ def proxy_loop(socket_src, socket_dst):
                     socket_src.send(data)
                 else:
                     socket_dst.send(data)
+        except ConnectionAbortedError:
+            sys.exit(0)
         except socket.error as err:
             error("Loop failed", err)
             return
@@ -122,6 +124,8 @@ def request_client(wrapper):
     # +----+-----+-------+------+----------+----------+
     try:
         s5_request = wrapper.recv(BUFSIZE)
+    except ConnectionAbortedError:
+            sys.exit(0)
     except ConnectionResetError:
         if wrapper != 0:
             wrapper.close()
