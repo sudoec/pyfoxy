@@ -343,8 +343,8 @@ def ThreadCount():
         for i in range(len(THREAD_POOL)-1, -1, -1):
             if(not THREAD_POOL[i].is_alive()):
                 THREAD_POOL.pop(i)
-        # print('Client Total: ' + str(len(THREAD_POOL)) + '\n')
-        # sleep(1)
+        #print('Client Total: ' + str(len(THREAD_POOL)) + '\n')
+        sleep(1)
 
 EXIT = ExitStatus()
 if __name__ == '__main__':
